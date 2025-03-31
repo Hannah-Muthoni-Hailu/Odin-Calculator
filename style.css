@@ -1,0 +1,29 @@
+.display {
+    width: 450px;
+    height: 90px;
+    margin: 20px;
+    border: 1px solid black;
+    border-radius: 15px;
+}
+
+.container {
+    display: flex;
+    width: fit-content;
+    margin: 0 20px;
+}
+
+#nums {
+    width: 360px;
+    height: 360px;
+}
+
+#ops {
+    width: 90px;
+    height: 360px;
+    display: flex;
+    flex-direction: column;
+}
+
+button:hover {
+    cursor: pointer;
+}
