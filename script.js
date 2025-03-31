@@ -1,4 +1,11 @@
-let a, b, res;
+let a = "";
+let b = "";
+let res = "";
+let op;
+let aSet = false;
+
+// Variable for the display
+const display = document.querySelector(".display");
 
 // Create grid for the numbers and the plus sign
 const parentDiv = document.querySelector("#nums");
@@ -12,7 +19,7 @@ for(var i = 0; i < 4; i++) {
         button.style.height = "100%";
         if (i == 3 && j != 1) {
             if (j == 2) {
-                button.innerHTML = "<p>clear</p>";
+                button.innerHTML = "clear";
             } else {
                 button.innerHTML = "<p><br></p>";
             }
@@ -23,10 +30,17 @@ for(var i = 0; i < 4; i++) {
             } else {
                 counter = 0
             }
-            button.addEventListener("click", () => {
-                console.log(counter);
-            })
         }
+        button.addEventListener("click", () => {
+            // display value in display
+            display.innerHTML = display.innerHTML + button.innerHTML
+            if (!aSet) {
+                a += button.innerHTML;
+            } else {
+                b += button.innerHTML;
+            }
+        })
+
         childDiv.appendChild(button);
     }
     parentDiv.appendChild(childDiv);
@@ -41,6 +55,13 @@ ops.forEach(element => {
     button.style.width = "100%";
     button.style.height = "90px";
     opsDiv.appendChild(button)
+    button.addEventListener("click", () => {
+        if (a != "") {
+            display.innerHTML = display.innerHTML + button.innerHTML
+            aSet = true;
+            op = button.innerHTML;
+        }
+    })
 })
 
 
