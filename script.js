@@ -1,6 +1,4 @@
-let a = "";
-let b = "";
-let res = "";
+let a, b, res;
 let op;
 let aSet = false;
 
@@ -21,7 +19,7 @@ for(var i = 0; i < 4; i++) {
             if (j == 2) {
                 button.innerHTML = "clear";
             } else {
-                button.innerHTML = "<p><br></p>";
+                button.innerHTML = ".";
             }
         } else {
             button.innerHTML = `${counter}`;
@@ -33,11 +31,24 @@ for(var i = 0; i < 4; i++) {
         }
         button.addEventListener("click", () => {
             // display value in display
-            display.innerHTML = display.innerHTML + button.innerHTML
-            if (!aSet) {
-                a += button.innerHTML;
+            if (button.innerHTML == "clear") {
+                display.innerHTML = "";
+                a = null;
+                b = null;
+                res = null;
+                op = null;
+                aSet = false;
             } else {
-                b += button.innerHTML;
+                if (!res) {
+                    display.innerHTML = display.innerHTML + button.innerHTML
+                } else {
+                    display.innerHTML = "";
+                    display.innerHTML = display.innerHTML + button.innerHTML
+                    if (op == "=") {
+                        res = null;
+                        a = null;
+                    }
+                }
             }
         })
 
@@ -56,10 +67,55 @@ ops.forEach(element => {
     button.style.height = "90px";
     opsDiv.appendChild(button)
     button.addEventListener("click", () => {
-        if (a != "") {
-            display.innerHTML = display.innerHTML + button.innerHTML
-            aSet = true;
-            op = button.innerHTML;
+        if (!a) {
+            a = Number(display.innerHTML);
+            op = button.innerHTML
+            display.innerHTML = ''
+        } else if (a && !b) {
+            b = Number(display.innerHTML);
+            if (op == "+") {
+                res = Math.floor(Math.round(operate(add, a, b) * 10000)) / 10000; // Round to the nearest 4 decimal places
+                display.innerHTML = res;
+                op = button.innerHTML
+                a = res;
+                b = null
+            } else if (op == "-") {
+                res = Math.floor(Math.round(operate(subtract, a, b) * 10000)) / 10000; // Round to the nearest 4 decimal places
+                display.innerHTML = res;
+                op = button.innerHTML
+                a = res;
+                b = null
+            } else if (op == "*") {
+                res = Math.floor(Math.round(operate(multiply, a, b) * 10000)) / 10000; // Round to the nearest 4 decimal places
+                display.innerHTML = res;
+                op = button.innerHTML
+                a = res;
+                b = null
+            } else if (op == "/") {
+                if (b == 0) {
+                    display.innerHTML = "";
+                    a = null;
+                    b = null;
+                    res = null;
+                    op = null;
+                    aSet = false;
+                    alert("Invalid expression")
+                } else {
+                    res = Math.floor(Math.round(operate(divide, a, b) * 10000)) / 10000; // Round to the nearest 4 decimal places
+                    display.innerHTML = res;
+                    op = button.innerHTML
+                    a = res;
+                    b = null
+                }
+            } else {
+                display.innerHTML = "";
+                a = null;
+                b = null;
+                res = null;
+                op = null;
+                aSet = false;
+                alert("Invalid expression")
+            }
         }
     })
 })
