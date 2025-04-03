@@ -38,6 +38,14 @@ for(var i = 0; i < 4; i++) {
                 res = null;
                 op = null;
                 aSet = false;
+            } else if (button.innerHTML == ".") {
+                if (display.innerHTML == "") {
+                    alert("There are no preceeding values. Invalid Expression");
+                } else if (display.innerHTML.indexOf(".") != -1) {
+                    alert("You cannot have multiple decimal places. Invalid expression")
+                } else {
+                    display.innerHTML = display.innerHTML + button.innerHTML
+                }
             } else {
                 if (!res) {
                     display.innerHTML = display.innerHTML + button.innerHTML
@@ -118,6 +126,11 @@ ops.forEach(element => {
             }
         }
     })
+})
+
+const backspace = document.querySelector("#bp")
+bp.addEventListener("click", () => {
+    display.innerHTML = String(display.innerHTML).trim().slice(0, -1)
 })
 
 
