@@ -1,40 +1,16 @@
 .display {
-    width: 450px;
+    width: 120px;
     height: 30px;
-    margin: 20px;
-    border: 1px solid black;
-    border-radius: 15px;
-    text-align: center;
-    padding: 30px;
+    border: 1px solid rgba(0, 0, 0, 0.486);
+    box-sizing: border-box;
+    border-radius: 5px;
+    text-align: right;
+    font-size: 27px;
 }
 
-.container {
+.nums{
     display: flex;
-    width: fit-content;
-    margin: 0 20px;
-}
-
-#nums {
-    width: 360px;
-    height: 360px;
-}
-
-#ops {
+    flex-wrap: wrap;
     width: 90px;
-    height: 360px;
-    display: flex;
-    flex-direction: column;
-}
-
-#bp {
-    width: 450px;
-    height: 30px;
-    margin: 0 20px;
-    border: 1px solid black;
-    text-align: center;
-    padding: 40px;
-}
-
-button:hover {
-    cursor: pointer;
+    justify-content: center;
 }

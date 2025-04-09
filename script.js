@@ -1,155 +1,36 @@
 let a, b, res;
-let op;
-let aSet = false;
 
-// Variable for the display
+// Display variable
 const display = document.querySelector(".display");
+display.textContent = ""
 
-// Create grid for the numbers and the plus sign
-const parentDiv = document.querySelector("#nums");
-let counter = 1;
-for(var i = 0; i < 4; i++) {
-    const childDiv = document.createElement("div");
-    childDiv.style.height = "90px";
-    for (var j = 0; j < 3; j++) {
-        const button = document.createElement("button");
-        button.style.width = "90px";
-        button.style.height = "100%";
-        if (i == 3 && j != 1) {
-            if (j == 2) {
-                button.innerHTML = "clear";
-            } else {
-                button.innerHTML = ".";
-            }
-        } else {
-            button.innerHTML = `${counter}`;
-            if (counter < 9){
-                counter += 1;
-            } else {
-                counter = 0
-            }
-        }
-        button.addEventListener("click", () => {
-            // display value in display
-            if (button.innerHTML == "clear") {
-                display.innerHTML = "";
-                a = null;
-                b = null;
-                res = null;
-                op = null;
-                aSet = false;
-            } else if (button.innerHTML == ".") {
-                if (display.innerHTML == "") {
-                    alert("There are no preceeding values. Invalid Expression");
-                } else if (display.innerHTML.indexOf(".") != -1) {
-                    alert("You cannot have multiple decimal places. Invalid expression")
-                } else {
-                    display.innerHTML = display.innerHTML + button.innerHTML
-                }
-            } else {
-                if (!res) {
-                    display.innerHTML = display.innerHTML + button.innerHTML
-                } else {
-                    display.innerHTML = "";
-                    display.innerHTML = display.innerHTML + button.innerHTML
-                    if (op == "=") {
-                        res = null;
-                        a = null;
-                    }
-                }
-            }
-        })
+// Numbers grid
+const nums = document.querySelector(".nums");
 
-        childDiv.appendChild(button);
-    }
-    parentDiv.appendChild(childDiv);
-}
-
-// Create grid for the operators
-const opsDiv = document.querySelector("#ops");
-let ops = ["+", "-", "*", "/", "="]
-ops.forEach(element => {
-    const button = document.createElement("button");
-    button.innerHTML = `${element}`;
-    button.style.width = "100%";
-    button.style.height = "90px";
-    opsDiv.appendChild(button)
-    button.addEventListener("click", () => {
-        if (!a) {
-            a = Number(display.innerHTML);
-            op = button.innerHTML
-            display.innerHTML = ''
-        } else if (a && !b) {
-            b = Number(display.innerHTML);
-            if (op == "+") {
-                res = Math.floor(Math.round(operate(add, a, b) * 10000)) / 10000; // Round to the nearest 4 decimal places
-                display.innerHTML = res;
-                op = button.innerHTML
-                a = res;
-                b = null
-            } else if (op == "-") {
-                res = Math.floor(Math.round(operate(subtract, a, b) * 10000)) / 10000; // Round to the nearest 4 decimal places
-                display.innerHTML = res;
-                op = button.innerHTML
-                a = res;
-                b = null
-            } else if (op == "*") {
-                res = Math.floor(Math.round(operate(multiply, a, b) * 10000)) / 10000; // Round to the nearest 4 decimal places
-                display.innerHTML = res;
-                op = button.innerHTML
-                a = res;
-                b = null
-            } else if (op == "/") {
-                if (b == 0) {
-                    display.innerHTML = "";
-                    a = null;
-                    b = null;
-                    res = null;
-                    op = null;
-                    aSet = false;
-                    alert("Invalid expression")
-                } else {
-                    res = Math.floor(Math.round(operate(divide, a, b) * 10000)) / 10000; // Round to the nearest 4 decimal places
-                    display.innerHTML = res;
-                    op = button.innerHTML
-                    a = res;
-                    b = null
-                }
-            } else {
-                display.innerHTML = "";
-                a = null;
-                b = null;
-                res = null;
-                op = null;
-                aSet = false;
-                alert("Invalid expression")
-            }
-        }
+for(let i = 1; i <= 9; i++){
+    const num = document.createElement("button");
+    num.textContent = i
+    num.style.height = "30px";
+    num.style.width = "30px";
+    num.addEventListener("click", () => {
+        numPressed(num.textContent)
     })
+    nums.append(num);
+}
+
+const zero = document.createElement("button");
+zero.textContent = 0;
+zero.style.height = "30px";
+zero.style.width = "30px";
+zero.addEventListener("click", () => {
+    numPressed(zero.textContent)
 })
+nums.append(zero);
 
-const backspace = document.querySelector("#bp")
-bp.addEventListener("click", () => {
-    display.innerHTML = String(display.innerHTML).trim().slice(0, -1)
-})
-
-
-function add(a, b) {
-    return a + b;
-}
-
-function subtract(a, b) {
-    return a - b;
-}
-
-function multiply(a, b) {
-    return a * b;
-}
-
-function divide(a, b) {
-    return a/b;
-}
-
-function operate(op, a, b) {
-    return op(a, b);
+function numPressed(value) {
+    // Reset res if it had been set after the equals sign was pressed
+    if(res){
+        res = null
+    }
+    display.textContent = display.textContent + value;
 }
