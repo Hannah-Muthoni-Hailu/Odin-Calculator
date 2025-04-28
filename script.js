@@ -27,10 +27,30 @@ zero.addEventListener("click", () => {
 })
 nums.append(zero);
 
+// Operators grid
+const ops = document.querySelector(".ops");
+
+
 function numPressed(value) {
     // Reset res if it had been set after the equals sign was pressed
     if(res){
         res = null
     }
     display.textContent = display.textContent + value;
+}
+
+function add(a, b){
+    return a + b;
+}
+
+function subtract(a, b){
+    return a - b;
+}
+
+function multiply(a, b){
+    return a * b;
+}
+
+function divide(a, b){
+    return a/b;
 }
